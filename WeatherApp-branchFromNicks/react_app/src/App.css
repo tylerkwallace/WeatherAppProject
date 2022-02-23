@@ -1,0 +1,75 @@
+
+.App{
+  background: linear-gradient(#e66465, #9198e5);
+  padding: 25px;
+  min-height: 100vh;
+}
+
+p{
+  font-family: 'Lato';
+}
+
+.current{
+  font-family: 'Varela Round';
+  font-size: xx-large;
+  padding: 20px;
+}
+.current .location{
+  font-family: 'Lato';
+  font-size: large;
+  color: white;
+  margin: 10px;
+}
+
+.current-icon{
+  color: white;
+  opacity: 0.6;
+}
+
+.current-temp{
+  font-size: 60px;
+  color: white;
+  margin: 25px;
+  font-family: 'Varela Round';
+}
+
+.input-group{
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .input-group{
+    width: 50%;
+  }
+}
+
+.form-control{
+  font-family: 'Lato';
+  color: white;
+  border: none;
+  background: none;
+  border-bottom: 2px solid rgb(255, 255, 255, 0.6);
+  padding: 15px;
+  border-radius: 0px;
+}
+
+.form-control:focus{
+  background-color: rgb(255, 255, 255, 0.6);
+  border: none;
+  outline: none;
+  box-shadow: none;
+  border-radius: 12px;
+}
+
+.btn{
+  border: 2px solid rgb(255, 255, 255, 0.6);
+  border-radius: 12px;
+  color: white;
+  font-family: 'Varela Round';
+}
+
+.btn:hover{
+  background-color: rgb(255, 255, 255, 0.6);
+  color: rgb(0, 0, 0, 0.6)
+}
+
+
