@@ -1,0 +1,165 @@
+
+.App{
+  background: linear-gradient(#ff9090,#ac258a);
+  padding: 25px;
+  min-height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.App.Clouds{
+  background-image: url(/src/Backgrounds/clouds.gif);
+}
+
+.App.Clear{
+  background-image: url(/src/Backgrounds/clear.gif), linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2));
+  background-blend-mode: overlay;
+}
+
+.App.Rain{
+  background-image: url(/src/Backgrounds/rain.gif);
+}
+
+.App.Snow{
+  background-image: url(/src/Backgrounds/snow.gif);
+}
+
+.App.Thunderstorm{
+  background-image: url(/src/Backgrounds/thunderstorm.gif);
+}
+
+.App.Fog{
+  background-image: url(/src/Backgrounds/fog.gif);
+}
+
+p{
+  font-family: 'Lato';
+}
+
+#xl-font{
+  font-size: x-large;
+}
+
+.current{
+  font-family: 'Varela Round';
+  font-size: xx-large;
+  padding: 20px;
+  color: white;
+}
+.current .location{
+  font-family: 'Varela Round';
+  font-size: xx-large;
+  color: white;
+  margin: 10px;
+}
+
+.date{
+  font-family: 'Lato';
+  font-size: large;
+  color: white;
+  margin: 10px;
+}
+
+.current-description{
+  font-family: 'Lato';
+  font-size: large;
+  color: white;
+
+}
+
+.current-temp{
+  font-size: 60px;
+  color: white;
+  margin: 35px;
+  font-family: 'Varela Round';
+}
+
+.current-box{
+  font-family: "Lato";
+  font-size: medium;
+  color: white;
+  background-color: rgb(255, 255, 255, 0.1);
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 2px solid rgb(255, 255, 255, 0.6);
+  border-radius: 12px;
+}
+@media (min-width: 768px){
+  .current-box{
+    width: 40%;
+  }
+}
+@media (min-width: 769px) and (max-width: 1024px){
+  .current-box{
+    width: 60%;
+  }
+}
+
+.current-info{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+img{
+  height: 75px;
+  width: auto;
+}
+
+#conditions-info{
+  margin-bottom: 15px;
+  font-size: large;
+  color: white;
+  font-weight: bold;
+  font-family: 'Varela Round';
+}
+
+#current-conditions{
+  font-family: 'Varela Round';
+  font-size: large;
+  font-weight: bold;
+}
+
+.input-group{
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .input-group{
+    width: 50%;
+  }
+}
+
+.form-control{
+  font-family: 'Lato';
+  color: white;
+  background-color: rgb(255, 255, 255, 0.6);
+  border: none;
+  outline: none;
+  box-shadow: none;
+  border-radius: 12px;
+  padding: 25px;
+}
+
+.btn{
+  border: 2px solid rgb(255, 255, 255, 0.6);
+  border-radius: 0px 12px 12px 0;
+  color: white;
+  font-family: 'Varela Round';
+}
+
+.btn:hover{
+  background-color: rgb(255, 255, 255, 0.6);
+  color: rgb(0, 0, 0, 0.6)
+}
+
+#err {
+  display: none;
+  width: 50%;
+  background-color: rgb(255, 255, 255, 0.6);
+  border: 2px solid red;
+  border-radius: 12px;
+  padding: 5px;
+  margin: 5px;
+  color: rgb(0, 0, 0, 0.6);
+  font-weight: bold;
+}

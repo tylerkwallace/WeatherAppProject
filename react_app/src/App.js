@@ -1,93 +1,133 @@
-import Clock from "./Clock";
-import Card from './Cards.js'
+import Clock from "./Components/Clock";
+import Card from "./Components/Cards"
 import React, { useState } from "react";
+import { toTitleCase, dateBuilder } from './Utils/Converters.js';
+import WebFont from 'webfontloader';
+
 
 const api = {
   key: "af103c190cd36ff3f3fb1e0c135a2ee1",
   base: "https://api.openweathermap.org/data/2.5/"
 }
 
-function App() {
-  const [fade1, setFade1] = useState(false);
-  const [fade2, setFade2] = useState(false);
-  const [fade3, setFade3] = useState(false);
-  const [fade4, setFade4] = useState(false);
-  const [fade5, setFade5] = useState(false);
+WebFont.load({
+  google: {
+    families: ['Varela Round', 'Lato']
+  }
+});
 
+function App() {
   const [query, setQuery] = useState('');
-  const [weather, setWeather] = useState({});
+  const [weatherCurrent, setWeatherCurrent] = useState({});
+  const [weatherDaily, setWeatherDaily] = useState({});
 
   const search = evt => {
-    if (evt.key === "Enter") {
-      fetch(`${api.base}weather?q=${query}&units=imperial&APPID=${api.key}`)
-        .then(res => res.json())
-        .then(result => {
-          setWeather(result);
-          setQuery('');
-          console.log(result);
-        });
-    }
+    fetch(`${api.base}weather?q=${query}&units=imperial&APPID=${api.key}`)
+      .then(res => res.json())
+      .then(result => {
+        setWeatherCurrent(result);
+        if (result.cod === 200){
+          let notify = document.getElementById("err");
+          notify.style.display = "none";
+          fetch(`${api.base}onecall?lat=${result.coord.lat}&lon=${result.coord.lon}&units=imperial&appid=${api.key}`)
+            .then(res2 => res2.json())
+            .then(result2 => {
+              setWeatherDaily(result2);
+              setQuery('');
+            })
+        } else {
+          let notify = document.getElementById("err");
+          notify.innerHTML = "Please enter a valid city name";
+          notify.style.display = "block";
+        }
+      });
   }
 
-  const dateBuilder = (d) => {
-    let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    let months = ["January", "February", "March", "April", "May", "June", "July",
-      "August", "September", "October", "November", "December"];
-
-    let day = days[d.getDay()];
-    let date = d.getDate();
-    let month = months[d.getMonth()];
-    let year = d.getFullYear();
-
-
-    return `${day} ${date} ${month} ${year}`
-
-
-  }
   return (
-    <div className="App">
+    <div className={(typeof weatherCurrent.main != "undefined") ? `App ${weatherCurrent.weather[0].main}` : 'App'}>
       <main>
-        {(typeof weather.main != "undefined") ? (
-          <div>
-            <div className='current'>
-              <Clock format={'hh-mm'} />
-              <div className='location'>
-                <center>
-                  {weather.name}, {weather.sys.country}
-                </center>
-              </div>
-              <div className='current-icon'>
-                <center><i class="fas fa-cloud fa-2x"></i></center>
-              </div>
-              <div className='current-temp'>
-                <center>{Math.round(weather.main.temp)}&#176;F</center>
-              </div>
-              <div className="location">
-                <center>
-                {dateBuilder(new Date())}
-                </center>
-              </div>
-              
-            </div>
+      <center><div id="err"></div></center>
+        <div className="current">
+          <center><Clock /></center>
+          <div className="date">
+            <center>
+              {dateBuilder(new Date())}
+            </center>
           </div>
-        ) : ('')}
-        <div class="d-flex justify-content-center">
+        </div>
+        <div className="d-flex justify-content-center">
           <div className="input-group">
-            <input type="search"
+            <input role="search"
+              type="search"
               className="form-control"
               placeholder="Search"
               onChange={e => setQuery(e.target.value)}
               value={query}
-              onKeyPress={search}
+              onKeyPress={(evt) => { if (evt.key === "Enter") { search() } }}
               aria-label="Search"
               aria-describedby="search-addon" />
-            <button type="button" className="btn">Search</button>
+            <button type="button" className="btn" onClick={search}>Search</button>
           </div>
         </div>
+        {(typeof weatherCurrent.main != "undefined") ? (
+          <div>
+            <div className='current'>
+              <div className='location'>
+                <center>
+                  {weatherCurrent.name}, {weatherCurrent.sys.country}
+                </center>
+              </div>
+              <div className='current-temp'>
+                <center>{Math.round(weatherCurrent.main.temp)}&#176;F</center>
+              </div>
+              <div className='current-description'>
+                <center>{toTitleCase(weatherCurrent.weather[0].description)}</center>
+                <div className='icon'>
+                  <center><img src={`http://openweathermap.org/img/w/${weatherCurrent.weather[0].icon}.png`} alt="" /></center>
+                </div>
+              </div>
+              <center>
+                <div className="current-box">
+                  <div id="conditions-info">Current Conditions</div>
+                  <div className="current-info">
+                    <div className="feels">
+                      <span id="current-conditions">
+                        {Math.round(weatherCurrent.main.feels_like)}&#176;F
+                      </span>
+                      <p>Feels Like</p>
+                    </div>
+                    <div className="humidity">
+                      <span id="current-conditions">
+                        {Math.round(weatherCurrent.main.humidity)}%
+                      </span>
+                      <p>Humidity</p>
+                    </div>
+                    <div className="wind">
+                      <span id="current-conditions">
+                        {Math.round(weatherCurrent.wind.speed)} mph
+                      </span>
+                      <p>Wind</p>
+                    </div>
+                  </div>
+                </div>
+              </center>
+              <div>
+              </div>
+            </div>
+            <div id="conditions-info">
+              <center><span id="xl-font">5 Day Forecast</span></center>
+            </div>
+
+          </div>
+        ) : null}
       </main>
-      <Card cardOneState={() => setFade1(!fade1)} cardTwoState={() => setFade2(!fade2)} cardThreeState={() => setFade3(!fade3)} cardFourState={() => setFade4(!fade4)} cardFiveState={() => setFade5(!fade5)} fade1={fade1} fade2={fade2} fade3={fade3} fade4={fade4} fade5={fade5} weather={weather} />
+      {(typeof weatherCurrent.main != "undefined") ? (
+        <Card weatherCurrent={weatherCurrent} weatherDaily={weatherDaily} />
+      ) : null}
     </div>
+
   );
+
 }
 
 
