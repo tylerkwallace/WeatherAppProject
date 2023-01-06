@@ -21,7 +21,7 @@
 }
 
 .App.Snow{
-  background-image: url(/src/Backgrounds/snow.gif);
+  background-image: url(/src/Backgrounds/snow.gif), linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3));
 }
 
 .App.Thunderstorm{
